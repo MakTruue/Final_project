@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notes-api
+  template:
+    metadata:
+      labels:
+        app: notes-api
+    spec:
+      containers:
+      - name: notes-api
+        image: maktrue/project.notes-api-v1:v1
+        ports:
+        - containerPort: 8085
+        env:
+        - name: DB_HOST
+          value: postgres
+        - name: DB_NAME
+          value: notesdb
+        - name: DB_USER
+          value: notesuser
+        - name: DB_PASS
+          value: notespwd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notes-api
+spec:
+  selector:
+    app: notes-api
+  ports:
+    - port: 8085
+      targetPort: 8085
+      nodePort: 30085   # фиксированный внешний порт (можно заменить на любой в диапазоне 30000-32767)
+  type: NodePort
