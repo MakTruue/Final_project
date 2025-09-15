@@ -24,6 +24,12 @@ jobs:
       - name: Install yamllint
         run: pip install yamllint
 
+      - name: Add custom yamllint config
+        run: |
+          echo "extends: default" > .yamllint
+          echo "" >> .yamllint
+          echo "rules: {}" >> .yamllint
+
       - name: Run yamllint
         run: yamllint .
 
