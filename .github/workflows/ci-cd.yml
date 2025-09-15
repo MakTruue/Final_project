@@ -9,8 +9,27 @@ env:
   IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/project.notes-api-v1
 
 jobs:
+  lint:
+    name: Lint YAML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install yamllint
+        run: pip install yamllint
+
+      - name: Run yamllint
+        run: yamllint .
+
   build-and-deploy:
     runs-on: self-hosted
+    needs: lint
 
     steps:
       - name: Checkout code
@@ -40,6 +59,5 @@ jobs:
       - name: Notify Slack
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"✅ Deployment *notes-api* успешно задеплоен в Kubernetes!"}' \
+          --data '{"text":"✅ Deployment *notes-api* успешно проименён в Kubernetes!"}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
-
