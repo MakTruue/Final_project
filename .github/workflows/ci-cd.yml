@@ -40,6 +40,6 @@ jobs:
       - name: Notify Slack
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"✅ Deployment *notes-api* успешно применён в Kubernetes!"}' \
+          --data '{"text":"✅ Deployment *notes-api* успешно задеплоен в Kubernetes!"}' \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
