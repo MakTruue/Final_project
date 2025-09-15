@@ -37,3 +37,9 @@ jobs:
           kubectl apply -f notes-app/k8s/deployment.yaml
           kubectl apply -f notes-app/k8s/ingress.yaml
 
+      - name: Notify Slack
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"✅ Deployment *notes-api* успешно применён в Kubernetes!"}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
+
