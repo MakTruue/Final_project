@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: notes-api
-        image: maktrue/project.notes-api-v1:v1
+        image: maktrue/project.notes-api-v2:v1
         ports:
         - containerPort: 8085
         env:
@@ -37,5 +37,5 @@ spec:
   ports:
     - port: 8085
       targetPort: 8085
-      nodePort: 30085   # фиксированный внешний порт (можно заменить на любой в диапазоне 30000-32767)
+      nodePort: 30085
   type: NodePort
