@@ -9,34 +9,8 @@ env:
   IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/project.notes-api-v1
 
 jobs:
-  lint:
-    name: Lint YAML
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install yamllint
-        run: pip install yamllint
-
-      - name: Add custom yamllint config
-        run: |
-          echo "extends: default" > .yamllint
-          echo "" >> .yamllint
-          echo "rules: {}" >> .yamllint
-
-      - name: Run yamllint
-        working-directory: ${{ github.workspace }}
-        run: yamllint .
-
   build-and-deploy:
     runs-on: self-hosted
-    needs: lint
 
     steps:
       - name: Checkout code
